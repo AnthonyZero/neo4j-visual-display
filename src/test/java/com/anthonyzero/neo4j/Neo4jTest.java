@@ -1,6 +1,8 @@
 package com.anthonyzero.neo4j;
 
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.anthonyzero.neo4j.model.Lesson;
 import com.anthonyzero.neo4j.model.Student;
 import com.anthonyzero.neo4j.payload.RealPayload;
@@ -90,5 +92,23 @@ public class Neo4jTest extends BaseApplicationTest {
         result.forEach(payload -> {
             log.info("{} -> {}", payload.getRealName(), payload.getRightNodeName());
         });
+    }
+
+    /**
+     * 查询系统的 节点-关系-节点
+     */
+    @Test
+    public void testAllNodeRealNode() {
+        List<RealPayload> result = neoService.findAllNodeRealNode();
+        JSONArray array = new JSONArray();
+        result.forEach(payload -> {
+            JSONObject jsonOb = new JSONObject();
+            jsonOb.put("source", payload.getLeftNodeName());
+            jsonOb.put("target", payload.getRightNodeName());
+            jsonOb.put("type", "resolved");
+            jsonOb.put("rela", payload.getRealName());
+            array.add(jsonOb);
+        });
+        log.info("all data jsonstr : {}", array.toJSONString());
     }
 }

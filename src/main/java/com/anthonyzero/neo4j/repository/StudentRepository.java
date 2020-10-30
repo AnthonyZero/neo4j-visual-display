@@ -65,4 +65,11 @@ public interface StudentRepository extends Neo4jRepository<Student, String> {
      */
     @Query("match(s:Student)-[real]->(n) where s.name={name} return type(real) as realName,n.name as rightNodeName")
     List<RealPayload> findStudentNodeRealNode(String name);
+
+    /**
+     * 获取所有节点-[关系]-节点
+     * @return
+     */
+    @Query("match(s)-[real]->(n) return s.name as leftNodeName,type(real) as realName,n.name as rightNodeName")
+    List<RealPayload> findAllNodeRealNode();
 }

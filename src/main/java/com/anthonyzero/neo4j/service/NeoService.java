@@ -189,4 +189,13 @@ public class NeoService {
         return studentRepo.findStudentNodeRealNode(studentName);
     }
 
+
+    /**
+     * 获取所有节点-[关系]-节点
+     * @return
+     */
+    public List<RealPayload> findAllNodeRealNode() {
+        return studentRepo.findAllNodeRealNode();
+    }
+
 }

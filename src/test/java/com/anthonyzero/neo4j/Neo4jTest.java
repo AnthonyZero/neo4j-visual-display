@@ -3,6 +3,7 @@ package com.anthonyzero.neo4j;
 import cn.hutool.json.JSONUtil;
 import com.anthonyzero.neo4j.model.Lesson;
 import com.anthonyzero.neo4j.model.Student;
+import com.anthonyzero.neo4j.payload.RealPayload;
 import com.anthonyzero.neo4j.service.NeoService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -77,5 +78,17 @@ public class Neo4jTest extends BaseApplicationTest {
         teacherStudent.forEach((k, v) -> log.info("【{}】教的学生有 {}", k, JSONUtil.toJsonStr(v.stream()
                 .map(Student::getName)
                 .collect(Collectors.toList()))));
+    }
+
+
+    /**
+     * 查询学生对应的 关系-节点
+     */
+    @Test
+    public void testStudentNodeRealNode() {
+        List<RealPayload> result = neoService.findStudentNodeRealNode("漩涡鸣人");
+        result.forEach(payload -> {
+            log.info("{} -> {}", payload.getRealName(), payload.getRightNodeName());
+        });
     }
 }

@@ -2,6 +2,7 @@ package com.anthonyzero.neo4j.repository;
 
 import com.anthonyzero.neo4j.model.Student;
 import com.anthonyzero.neo4j.payload.ClassmateInfoGroupByLesson;
+import com.anthonyzero.neo4j.payload.RealPayload;
 import com.anthonyzero.neo4j.payload.TeacherStudent;
 import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.neo4j.annotation.Query;
@@ -55,4 +56,13 @@ public interface StudentRepository extends Neo4jRepository<Student, String> {
      */
     @Query("match ((s:Student)-[:R_LESSON_OF_STUDENT]->(:Lesson)-[:R_TEACHER_OF_LESSON]->(t:Teacher))with t.name as teacherName,collect(distinct s) as students return teacherName,students")
     List<TeacherStudent> findTeacherStudentByLesson();
+
+
+    /**
+     * 查询节点 对于的关系和节点
+     * @param name
+     * @return
+     */
+    @Query("match(s:Student)-[real]->(n) where s.name={name} return type(real) as realName,n.name as rightNodeName")
+    List<RealPayload> findStudentNodeRealNode(String name);
 }

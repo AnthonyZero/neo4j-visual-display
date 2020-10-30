@@ -5,6 +5,7 @@ import com.anthonyzero.neo4j.model.Student;
 import com.anthonyzero.neo4j.model.Teacher;
 import com.anthonyzero.neo4j.model.Class;
 import com.anthonyzero.neo4j.payload.ClassmateInfoGroupByLesson;
+import com.anthonyzero.neo4j.payload.RealPayload;
 import com.anthonyzero.neo4j.payload.TeacherStudent;
 import com.anthonyzero.neo4j.repository.ClassRepository;
 import com.anthonyzero.neo4j.repository.LessonRepository;
@@ -177,4 +178,15 @@ public class NeoService {
 
         return result;
     }
+
+
+    /**
+     * 查询学生的 对应的关系-节点
+     * @param studentName
+     * @return
+     */
+    public List<RealPayload> findStudentNodeRealNode(String studentName) {
+        return studentRepo.findStudentNodeRealNode(studentName);
+    }
+
 }

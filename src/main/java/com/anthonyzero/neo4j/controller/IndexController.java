@@ -26,6 +26,8 @@ public class IndexController {
         List<RealPayload> payloads = new ArrayList<>();
         if(StringUtils.isBlank(keyword)) {
             payloads = neoService.findAllNodeRealNode();
+        } else {
+            payloads = queryGraphNodeKw(keyword);
         }
         List<GraphNode> nodes = convertGraphNode(payloads);
         return nodes;
@@ -37,6 +39,19 @@ public class IndexController {
             GraphNode node = new GraphNode(payload.getLeftNodeName(), payload.getRealName(),
                     payload.getRightNodeName());
             nodes.add(node);
+        }
+        return nodes;
+    }
+
+
+    private List<RealPayload> queryGraphNodeKw(String keyword) {
+        List<RealPayload> payloads = neoService.findAllNodeRealNode();
+        List<RealPayload> nodes = new ArrayList<>();
+        for(RealPayload payload : payloads) {
+            if(payload.getLeftNodeName().equals(keyword)
+                || payload.getRightNodeName().equals(keyword)) {
+                nodes.add(payload);
+            }
         }
         return nodes;
     }

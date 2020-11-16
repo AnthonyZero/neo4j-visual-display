@@ -1,0 +1,78 @@
+
+.links line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+}
+
+.nodes circle {
+    stroke: #fff;
+    stroke-width: 1.5px;
+}
+
+#mask{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    display: none;
+    z-index:9999999;
+    background:#ccc;
+}
+#mask-body{
+    position: absolute;
+    top: 70px;
+    left: 50px;
+    height: 650px;
+    border: 1px solid black;
+    background: white!important;
+    opacity: 1;
+    z-index: 99;
+}
+#mask-header{
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    height: 50px;
+    border: 1px solid black;
+    background: white!important;
+    opacity: 1;
+    z-index: 999;
+}
+#mask-header>button{
+    padding: 3px;
+    border: 1px solid black;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+}
+#mask-header>button:hover{
+    background: #ccc;
+}
+/*d3显示传播路径风格*/
+.link {
+    stroke: #aaa;
+    stroke-width: 1px;
+}
+.link.resolved {
+    stroke-dasharray: 0,2 1;
+}
+.node {
+    cursor: move;
+    fill: rgba(104, 189, 246, 1.0);
+    stroke: rgba(92, 168, 219, 0.9);
+    stroke-width: 3px;
+}
+
+.node.fixed {
+    fill: rgba(104, 189, 246, 1.0);
+}
+text {
+    font: 12px Microsoft YaHei;
+    pointer-events: none;
+}
+
+.linetext {
+    font-size: 12px Microsoft YaHei;
+}

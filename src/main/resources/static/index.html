@@ -12,7 +12,7 @@
     <div id="mask-body"></div>
 </div>
 <div class = "mapAndAlerm" style="overflow: hidden;">
-    <input  style="float:left;width:60px;height:40px;">
+    <input id="keyword"  style="float:left;width:60px;height:40px;">
     <button id="search" style="float:left;width:60px;height:40px;" title="搜索">搜索</button>
     <button id="fullscreen" style="float:left;width:60px;height:40px;" title="全屏显示">全屏</button>
     <div  id="graphics" style="height:600px;"></div>
@@ -37,13 +37,19 @@
 //   {source: "长春", target: "吉林服务", type: "resolved", rela:"动车"},
 //   {source: "长春", target: "综合长春", type: "resolved", rela:"动车"}
 // ];
-   var linkss = [{"source":"第三班","type":"resolved","rela":"R_BOSS_OF_CLASS","target":"迈特凯"},{"source":"体术","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"迈特凯"},{"source":"第七班","type":"resolved","rela":"R_BOSS_OF_CLASS","target":"旗木卡卡西"},{"source":"手里剑","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"旗木卡卡西"},{"source":"幻术","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"旗木卡卡西"},{"source":"仙术","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"自来也"},{"source":"螺旋丸","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"自来也"},{"source":"医疗","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"纲手"},{"source":"咒印","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"大蛇丸"},{"source":"日向宁次","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"春野樱","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"李洛克","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"天天","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"宇智波佐助","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"幻术"},{"source":"宇智波佐助","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"手里剑"},{"source":"春野樱","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"手里剑"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"手里剑"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"螺旋丸"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"仙术"},{"source":"春野樱","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"医疗"},{"source":"宇智波佐助","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"咒印"},{"source":"天天","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第三班"},{"source":"李洛克","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第三班"},{"source":"日向宁次","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第三班"},{"source":"春野樱","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第七班"},{"source":"宇智波佐助","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第七班"},{"source":"漩涡鸣人","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第七班"}]
-   function mychart_first(graphics,graphicsid,linkss,title)
+
+   //var linkss = [{"source":"第三班","type":"resolved","rela":"R_BOSS_OF_CLASS","target":"迈特凯"},{"source":"体术","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"迈特凯"},{"source":"第七班","type":"resolved","rela":"R_BOSS_OF_CLASS","target":"旗木卡卡西"},{"source":"手里剑","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"旗木卡卡西"},{"source":"幻术","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"旗木卡卡西"},{"source":"仙术","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"自来也"},{"source":"螺旋丸","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"自来也"},{"source":"医疗","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"纲手"},{"source":"咒印","type":"resolved","rela":"R_TEACHER_OF_LESSON","target":"大蛇丸"},{"source":"日向宁次","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"春野樱","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"李洛克","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"天天","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"宇智波佐助","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"幻术"},{"source":"宇智波佐助","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"手里剑"},{"source":"春野樱","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"手里剑"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"手里剑"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"螺旋丸"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"仙术"},{"source":"春野樱","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"医疗"},{"source":"宇智波佐助","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"咒印"},{"source":"天天","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第三班"},{"source":"李洛克","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第三班"},{"source":"日向宁次","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第三班"},{"source":"春野樱","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第七班"},{"source":"宇智波佐助","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第七班"},{"source":"漩涡鸣人","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第七班"}]
+   //  var linkss = [{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"体术"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"手里剑"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"螺旋丸"},{"source":"漩涡鸣人","type":"resolved","rela":"R_LESSON_OF_STUDENT","target":"仙术"},{"source":"漩涡鸣人","type":"resolved","rela":"R_STUDENT_OF_CLASS","target":"第七班"}];
+   //  mychart_first('graphics','#graphics',linkss,'传播路径');
+    function mychart_first(graphics,graphicsid,linkss,title)
    {
         $("#mask-body").width($(document.body).width()-100);
         $("#mask-header").width($(document.body).width()-100);
         $("#mask-header>button").click(function(){
+            //退出全屏
             $("#mask").css('display',"none");
+            //重新刷新一次
+            window.location.reload();
         });
         var links = [];
         for (var i = 0; i < linkss.length; i++) {
@@ -79,6 +85,7 @@
         .on("dragstart", dragstart)
         .on("dragend",dragend);
 
+        d3.select(graphicsid).select("svg").remove(); //重点 把上一次添加的svg 节点进行删除 每次只保留一个svg dom
         var svg = d3.select(graphicsid).append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -292,11 +299,24 @@
     }
 
     //初始化
-    mychart_first('graphics','#graphics',linkss,'传播路径');
-    $("#fullscreen").live("click",function(){
-        //全屏
-        $("#mask").css("display","block");
-        mychart_first('mask-body','#mask-body',linkss,'传播路径');
+    $.getJSON("/graph", function(json){
+        var linkss = json;
+        mychart_first('graphics','#graphics',linkss,'传播路径');
     });
+    //全屏
+    $("#fullscreen").live("click",function(){
+        $("#mask").css("display","block");
+        var kw = $("#keyword").val();
+        $.getJSON("/graph?keyword=" + kw, function(json){
+            mychart_first('mask-body','#mask-body',json,'传播路径');
+        });
+    });
+    //搜索
+    $("#search").live("click", function () {
+        var kw = $("#keyword").val();
+        $.getJSON("/graph?keyword=" + kw, function(json){
+            mychart_first('graphics','#graphics',json,'传播路径');
+        });
+    })
 
 </script>

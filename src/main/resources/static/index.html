@@ -15,12 +15,131 @@
     <input id="keyword"  style="float:left;width:60px;height:40px;">
     <button id="search" style="float:left;width:60px;height:40px;" title="搜索">搜索</button>
     <button id="fullscreen" style="float:left;width:60px;height:40px;" title="全屏显示">全屏</button>
+    <button id="download" style="float:left;width:80px;height:40px;" title="下载">图片下载</button>
     <div  id="graphics" style="height:600px;"></div>
 </div>
 <script src="js/d3.v3.min.js"></script>
 <script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/saveSvgAsPng.js"></script>
 </body>
 <script>
+
+    // var doctype = '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [<!ENTITY nbsp " ">]>';
+    // function convertToPng(src, w, h) {
+    //     var canvas = document.createElement('canvas');
+    //     var context = canvas.getContext('2d');
+    //     canvas.width = w;
+    //     canvas.height = h;
+    //     context.drawImage(src, 0, 0);
+    //     var png;
+    //     try {
+    //         png = canvas.toDataURL("image/png");
+    //     } catch (e) {
+    //         if ((typeof SecurityError !== 'undefined' && e instanceof SecurityError) || e.name == "SecurityError") {
+    //             console.error("Rendered SVG images cannot be downloaded in this browser.");
+    //             return;
+    //         } else {
+    //             throw e;
+    //         }
+    //     }
+    //     return png;
+    // }
+    //
+    // function isElement(obj) {
+    //     return obj instanceof HTMLElement || obj instanceof SVGElement;
+    // }
+    //
+    // function reEncode(data) {
+    //     data = encodeURIComponent(data);
+    //     data = data.replace(/%([0-9A-F]{2})/g, function (match, p1) {
+    //         var c = String.fromCharCode('0x' + p1);
+    //         return c === '%' ? '%25' : c;
+    //     });
+    //     return decodeURIComponent(data);
+    // }
+    //
+    // function uriToBlob(uri) {
+    //     var byteString = window.atob(uri.split(',')[1]);
+    //     var mimeString = uri.split(',')[0].split(':')[1].split(';')[0]
+    //     var buffer = new ArrayBuffer(byteString.length);
+    //     var intArray = new Uint8Array(buffer);
+    //     for (var i = 0; i < byteString.length; i++) {
+    //         intArray[i] = byteString.charCodeAt(i);
+    //     }
+    //     return new Blob([buffer], {type: mimeString});
+    // }
+    // function downLoad(el, name) {
+    //     if (!isElement(el)) {
+    //         throw new Error('an HTMLElement or SVGElement is required; got ' + el);
+    //     }
+    //     if (!name) {
+    //         console.error("文件名为空!");
+    //         return;
+    //     }
+    //     var xmlns = "http://www.w3.org/2000/xmlns/";
+    //     var clone = el.cloneNode(true);
+    //     clone.setAttribute("version", "1.1");
+    //     if (!clone.getAttribute('xmlns')) {
+    //         clone.setAttributeNS(xmlns, "xmlns", "http://www.w3.org/2000/svg");
+    //     }
+    //     if (!clone.getAttribute('xmlns:xlink')) {
+    //         clone.setAttributeNS(xmlns, "xmlns:xlink", "http://www.w3.org/1999/xlink");
+    //     }
+    //     var svg = clone.outerHTML;
+    //     var uri = 'data:image/svg+xml;base64,' + window.btoa(reEncode(doctype + svg));
+    //     var image = new Image();
+    //     image.onload = function () {
+    //         var png = convertToPng(image, image.width, image.height);
+    //         var saveLink = document.createElement('a');
+    //         var downloadSupported = 'download' in saveLink;
+    //         if (downloadSupported) {
+    //             saveLink.download = name + ".png";
+    //             saveLink.style.display = 'none';
+    //             document.body.appendChild(saveLink);
+    //             try {
+    //                 var blob = uriToBlob(png);
+    //                 var url = URL.createObjectURL(blob);
+    //                 saveLink.href = url;
+    //                 saveLink.onclick = function () {
+    //                     requestAnimationFrame(function () {
+    //                         URL.revokeObjectURL(url);
+    //                     })
+    //                 };
+    //             } catch (e) {
+    //                 saveLink.href = uri;
+    //             }
+    //             saveLink.click();
+    //             document.body.removeChild(saveLink);
+    //         }
+    //     };
+    //     image.src = uri;
+    // }
+
+    //下载
+    function downloadFile(fileName, content) {
+        var aLink = document.createElement('a');
+        var blob = this.base64ToBlob(content); //new Blob([content]);
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("click", true, true);//initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+        aLink.download = fileName;
+        aLink.href = URL.createObjectURL(blob);
+        // aLink.dispatchEvent(evt);
+        aLink.click()
+    }
+    //base64转blob
+    function base64ToBlob(code) {
+        var parts = code.split(';base64,');
+        var contentType = parts[0].split(':')[1];
+        var raw = window.atob(parts[1]);
+        var rawLength = raw.length;
+
+        var uInt8Array = new Uint8Array(rawLength);
+
+        for (var i = 0; i < rawLength; ++i) {
+            uInt8Array[i] = raw.charCodeAt(i);
+        }
+        return new Blob([uInt8Array], {type: contentType});
+    }
 //   var linkss = [
 //   {source: "北京", target: "上海", type: "resolved", rela:"高铁"},
 //   {source: "北京", target: "天津", type: "resolved", rela:"高铁"},
@@ -318,5 +437,16 @@
             mychart_first('graphics','#graphics',json,'传播路径');
         });
     })
+    //下载图片
+    $("#download").live("click",function(){
+        // var el = d3.select("#graphics").node().children[0];
+        // downLoad(el,"图谱");
+        var canvas = $("#graphics svg")[0];
+        //调用方法转换即可，转换结果就是data -》 base64的数据图片
+        svgAsPngUri(canvas, null, function(data) {
+            downloadFile("图谱.png", data);
+            //$("#graphics").append('<img src="' + data + '" alt="转换失败"/>');
+        });
+    });
 
 </script>

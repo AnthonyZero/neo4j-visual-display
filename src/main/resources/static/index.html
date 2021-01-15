@@ -18,6 +18,8 @@
     <button id="fullscreen" style="float:left;width:60px;height:40px;" title="全屏显示" class="btn btn-success">全屏</button>
     <button id="download" style="float:left;width:80px;height:40px;" title="下载" class="btn btn-warning">图片下载</button>
     <button id="export" style="float:left;width:80px;height:40px;" title="导出" class="btn btn-danger">导出数据</button>
+    <a id="exportTag" href="" style="display: none"></a>
+
     <div  id="graphics" style="height:600px;"></div>
 </div>
 <script src="js/d3.v3.min.js"></script>
@@ -451,4 +453,26 @@
         });
     });
 
+</script>
+<script>
+    //下载数据
+    const exportTag = document.getElementById('exportTag');
+    $("#export").live("click", function () {
+        var kw = $("#keyword").val();
+        $.getJSON("/graph?keyword=" + kw, function(jsonData){
+            const arr = [];
+            for(let i = 0 ; i < jsonData.length ; i++ ){
+                arr.push(jsonData[i]['source'] + '\t' + jsonData[i]['rela'] + '\t' + jsonData[i]['target'] + '\n');
+            }
+            download(arr, '数据.txt')
+            exportTag.click();
+        });
+    })
+
+
+    function download(data, name) {
+        const file = new Blob(data, {type: 'text/plain'});
+        exportTag.href = URL.createObjectURL(file);
+        exportTag.download = name;
+    }
 </script>

@@ -1,10 +1,11 @@
-知识图谱
-<br>操作1：鼠标点击节点相关连线加粗 &nbsp;&nbsp; 操作2：鼠标左键可拖拽、固定节点 &nbsp;&nbsp; 操作3：鼠标左键点击空白，拖动画板
-<br>操作4：鼠标滑轮缩放画板&nbsp;&nbsp; 操作5：点击全屏可全屏显示 &nbsp;&nbsp; 操作6：根据关键字搜索节点信息
+<h2 style="text-align: center">知识图谱</h2>
+<!--<br>操作1：鼠标点击节点相关连线加粗 &nbsp;&nbsp; 操作2：鼠标左键可拖拽、固定节点 &nbsp;&nbsp; 操作3：鼠标左键点击空白，拖动画板-->
+<!--<br>操作4：鼠标滑轮缩放画板&nbsp;&nbsp; 操作5：点击全屏可全屏显示 &nbsp;&nbsp; 操作6：根据关键字搜索节点信息-->
 <!DOCTYPE html>
 <meta charset="utf-8">
 <link type="text/css" rel="styleSheet" href="css/index.css"/>
-<body>
+<link type="text/css" rel="styleSheet" href="css/bootstrap.min.css"/>
+<body style="background-color:rgba(158,158,110,0.38)">
 <div id="mask" style="width: 100%;height:100%;">
     <div id="mask-header">
         <button>退出</button>
@@ -12,10 +13,11 @@
     <div id="mask-body"></div>
 </div>
 <div class = "mapAndAlerm" style="overflow: hidden;">
-    <input id="keyword"  style="float:left;width:60px;height:40px;">
-    <button id="search" style="float:left;width:60px;height:40px;" title="搜索">搜索</button>
-    <button id="fullscreen" style="float:left;width:60px;height:40px;" title="全屏显示">全屏</button>
-    <button id="download" style="float:left;width:80px;height:40px;" title="下载">图片下载</button>
+    <input id="keyword"  style="float:left;width:100px;height:40px;margin-left: 10px" class="form-control">
+    <button id="search" style="float:left;width:60px;height:40px;" title="搜索" class="btn btn-info">搜索</button>
+    <button id="fullscreen" style="float:left;width:60px;height:40px;" title="全屏显示" class="btn btn-success">全屏</button>
+    <button id="download" style="float:left;width:80px;height:40px;" title="下载" class="btn btn-warning">图片下载</button>
+    <button id="export" style="float:left;width:80px;height:40px;" title="导出" class="btn btn-danger">导出数据</button>
     <div  id="graphics" style="height:600px;"></div>
 </div>
 <script src="js/d3.v3.min.js"></script>
